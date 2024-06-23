@@ -7,9 +7,9 @@ module.exports.AttendeeSignUp = async(req, res) => {
         const { first_name, last_name, email, password } = req.body;
 
         // Search for exisiting users with the same email
-        const existingEmailUser = await findUserByAttribute("email", email);
+        const existingUser = await findUserByAttribute("email", email);
         
-        if(existingEmailUser.length > 0) {
+        if(existingUser.length > 0) {
             res.json({
                 message : "A user with this email already exists"
             })
