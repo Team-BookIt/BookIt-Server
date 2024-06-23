@@ -1,7 +1,17 @@
-const postgres = require('postgres');
-const { DB_URL } = process.env;
+const { Pool } = require('pg');
+const { USER, HOST, DATABASE, PASSWORD, DB_PORT } = process.env;
 
-const connectionString = DB_URL;
-const sql = postgres(connectionString);
+const pool = new Pool({
+    user : USER,
+    host : HOST,
+    database : DATABASE,
+    password : PASSWORD,
+    port : DB_PORT,
+})
 
-module.exports = sql;
+pool.connect((err) => {
+    if (err) throw err
+    console.log('Connected to PostgreSQL successfully!')
+    })
+
+module.exports = { pool };
