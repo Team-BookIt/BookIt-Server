@@ -1,6 +1,6 @@
-const bcrypt = require('bcrypt');
 const { findUserByAttribute } = require('../../SQL/AuthQueries/FindExistingUser');
 const { createUser } = require('../../SQL/AuthQueries/CreateUser');
+const { generateToken }  = require('../../Util/Auth');
 
 module.exports.AttendeeSignUp = async(req, res) => {
     try{
@@ -14,29 +14,28 @@ module.exports.AttendeeSignUp = async(req, res) => {
                 message : "A user with this email already exists"
             })
         } else {
-            
-            // Hash the password before storing it in the database
-            const hashedPassword = await bcrypt.hash(password, 12);
 
             // New user object to be stored in the database
             const newUser = {
                 first_name: first_name,
                 last_name: last_name,
                 email: email,
-                password : hashedPassword
+                password : password
             };
 
-            const response = await createUser(newUser);
+            const user = await createUser(newUser);
+        
+            const token = generateToken(user.id);
 
             res.json({
                 message : 'User created successfully',
-                user : response
+                token : token,
             })
 
         }
     } catch(error) {
         console.log(error);
-        res.json({
+        res.send({
             message : "Internal Server error"
         })
     }

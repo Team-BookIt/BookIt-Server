@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const sql = require('../Config/db');
-const { AttendeeSignUp } = require('../Controllers/AuthControllers/UserAuth');
+const { AttendeeSignUp } = require('../Controllers/AuthControllers/AttendeeSignup');
 
 const returnData = async(req, res) => {
     const data = await sql`

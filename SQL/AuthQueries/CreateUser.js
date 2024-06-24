@@ -1,11 +1,17 @@
 const { pool } = require('../../Config/db');
+const bcrypt = require('bcrypt');
 
 const createUser = async(user) => {
     try{ 
-        const query =  `INSERT INTO guest(first_name, last_name, email, password) VALUES($1, $2, $3, $4) RETURNING *`;
-        const values = [user.first_name, user.last_name, user.email, user.password];
-        const result = pool.query(query, values);
-        return result.rows;
+        // Hash the password before storing it in the database
+        const hashedPassword = await bcrypt.hash(user.password, 12);
+        let query =  `INSERT INTO guest(first_name, last_name, email, password) VALUES($1, $2, $3, $4) RETURNING *`;
+        const values = [user.first_name, user.last_name, user.email, hashedPassword];
+        const newUser = await pool.query(query, values);
+
+        console.log("User created successfully", newUser.rows);
+
+        return newUser.rows[0];
     } catch(error) {
         console.error(error);
         throw error;
