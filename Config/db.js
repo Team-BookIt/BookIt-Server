@@ -6,7 +6,7 @@ const pool = new Pool({
     host : HOST,
     database : DATABASE,
     password : PASSWORD,
-    port : DB_PORT,
+    port : DB_PORT
 })
 
 pool.connect((err) => {

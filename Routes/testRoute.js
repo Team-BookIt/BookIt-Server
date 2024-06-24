@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const sql = require('../Config/db');
 const { AttendeeSignUp } = require('../Controllers/AuthControllers/AttendeeSignup');
+const { AttendeeLogin } = require('../Controllers/AuthControllers/AttendeeLogin');
 
 const returnData = async(req, res) => {
     const data = await sql`
@@ -31,5 +32,6 @@ const addData = async (req, res) => {
 router.get('/data', returnData);
 router.post('/insert', addData);
 router.post('/signup', AttendeeSignUp);
+router.post('/login', AttendeeLogin);
 
 module.exports = router;
