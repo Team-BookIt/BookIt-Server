@@ -6,7 +6,7 @@ require('dotenv').config();
 const app = express();
 
 // Import route handling logic
-const testRoute = require('./Routes/testRoute');
+const testRoute = require('./Routes/AuthRoutes');
 
 // Set up Cross-Origin resource sharing & body parser
 app.use(cors());
