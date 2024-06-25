@@ -9,8 +9,8 @@ module.exports.OrganizerLogin = async(req, res) => {
         const organizer = await findByAttribute("organizer", "email", email);
 
         if(organizer.length == 0) {
-            res.status(204)
-                .send({ message : "No exisiting email found"});
+            console.log("No existing email found");
+            res.send({ message : "No exisiting email found"})
         } else {
             const isValidPassword = await verifyPassword(password, organizer[0].password);
 
