@@ -1,4 +1,4 @@
-const { findUserByAttribute } = require('../../SQL/AuthQueries/FindExistingUser');
+const { findByAttribute } = require('../../SQL/AuthQueries/FindExistingEntity');
 const { verifyPassword } = require('../../Util/VerifyPassword');
 const { generateToken } = require('../../Util/Auth');
 
@@ -6,13 +6,12 @@ module.exports.AttendeeLogin = async(req, res) => {
     try {
         const { email, password } = req.body;
 
-        const user = await findUserByAttribute("email", email);
+        const user = await findByAttribute("guest", "email", email);
 
         if(user.length == 0) {
             res.status(204)
                 .send({ message : "No exisiting email found"});
         } else {
-            console.log(user[0].password);
             const isValidPassword = await verifyPassword(password, user[0].password);
 
             if(isValidPassword) {

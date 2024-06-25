@@ -1,4 +1,4 @@
-const { findUserByAttribute } = require('../../SQL/AuthQueries/FindExistingUser');
+const { findByAttribute } = require('../../SQL/AuthQueries/FindExistingEntity');
 const { createUser } = require('../../SQL/AuthQueries/CreateUser');
 const { generateToken }  = require('../../Util/Auth');
 
@@ -7,7 +7,7 @@ module.exports.AttendeeSignUp = async(req, res) => {
         const { first_name, last_name, email, password } = req.body;
 
         // Search for exisiting users with the same email
-        const existingUser = await findUserByAttribute("email", email);
+        const existingUser = await findByAttribute("guest", "email", email);
         
         if(existingUser.length > 0) {
             res.json({
