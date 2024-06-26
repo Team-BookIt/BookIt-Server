@@ -6,7 +6,8 @@ require('dotenv').config();
 const app = express();
 
 // Import route handling logic
-const testRoute = require('./Routes/AuthRoutes');
+const authRoutes = require('./Routes/AuthRoutes');
+const editRoutes = require('./Routes/EditRoutes');
 
 // Set up Cross-Origin resource sharing & body parser
 app.use(cors());
@@ -21,4 +22,5 @@ app.listen(3000, ()=> {
     console.log("BookIt! is up and running!");
 });
 
-app.use('/', testRoute);
+app.use('/auth', authRoutes);
+app.use('/profile', editRoutes);
