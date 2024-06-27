@@ -16,15 +16,13 @@ module.exports.editUserProfile = async(attributes, id) => {
     try {
         const attributesToUpdate = Object.keys(attributes).map((key, index) => {
             return `${key} = $${index + 1}`;
-        });
+        }).join(' ,');
 
         const values = [...Object.values(attributes), parseInt(id)];
 
-        console.log("Values:", values);
-
         const query = `UPDATE guest
                        SET 
-                       ${attributesToUpdate.join(' ,')}
+                       ${attributesToUpdate}
                        WHERE
                        id = $${values.length}
                        RETURNING *`;
