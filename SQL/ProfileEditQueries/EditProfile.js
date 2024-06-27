@@ -1,6 +1,6 @@
 const { pool } = require('../../Config/db');
 
-module.exports.editUserProfile = async(attributes, id) => {
+module.exports.editProfile = async(table ,attributes, id) => {
     // Logic: 
     // `attributes` contains a key-value pairing of all the attributes we're going to update
     // We want to insert all these values dynamically into the query
@@ -20,7 +20,7 @@ module.exports.editUserProfile = async(attributes, id) => {
 
         const values = [...Object.values(attributes), parseInt(id)];
 
-        const query = `UPDATE guest
+        const query = `UPDATE ${table}
                        SET 
                        ${attributesToUpdate}
                        WHERE

@@ -1,26 +1,26 @@
 const { findByAttribute } = require('../../SQL/AuthQueries/FindExistingEntity');
 const { editProfile } = require('../../SQL/ProfileEditQueries/EditProfile');
 
-module.exports.AttendeeProfileUpdate = async(req, res) => {
+module.exports.OrganizerProfileUpdate = async(req, res) => {
     try {
         const { attributes, id } = req.body;
-        const existingUser = await findByAttribute("guest", "id", id);
+        const existingOrganizer = await findByAttribute('organizer', 'id', id);
 
-        if(!existingUser.length) {
-            console.log(id, existingUser);
-            res.send({ message : "No user found"});
+        if(!existingOrganizer.length) {
+            console.log("Organizer not found");
+            res.send({ message : "No existing organizer found"});
             return;
         }
 
-        const successfulEdit = await editProfile('guest', attributes, id);
+        const successfulEdit = await editProfile('organizer', attributes, id);
 
         console.log(successfulEdit);
 
         res.status(200)
             .send({
-                message : 'User Profile updated successfully',
-                user : successfulEdit
-            })
+                message : "Profile edited successfully",
+                profile : successfulEdit
+            });
 
     } catch(error) {
         console.error(error)
