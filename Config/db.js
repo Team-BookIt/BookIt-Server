@@ -9,9 +9,4 @@ const pool = new Pool({
     port : DB_PORT
 })
 
-pool.connect((err) => {
-    if (err) throw err
-    console.log('Connected to PostgreSQL successfully!')
-    })
-
 module.exports = { pool };
