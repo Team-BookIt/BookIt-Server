@@ -8,6 +8,7 @@ const app = express();
 // Import route handling logic
 const authRoutes = require('./Routes/AuthRoutes');
 const editRoutes = require('./Routes/EditRoutes');
+const homeRoute = require('./Routes/HomeRoute');
 
 // Set up Cross-Origin resource sharing & body parser
 app.use(cors());
@@ -22,5 +23,6 @@ app.listen(3000, ()=> {
     console.log("BookIt! is up and running!");
 });
 
+app.use('/', homeRoute);
 app.use('/auth', authRoutes);
 app.use('/profile', editRoutes);
