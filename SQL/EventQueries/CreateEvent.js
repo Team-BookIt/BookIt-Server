@@ -32,7 +32,7 @@ module.exports.createEvent = async(eventDetails, organizerID) => {
 
         return response.rows[0];
     } catch (error) {
-        console.error(error);
+        console.error("Error creating event: ", error);
         throw error;
     }
 }

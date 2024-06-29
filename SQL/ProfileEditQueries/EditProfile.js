@@ -34,7 +34,7 @@ module.exports.editProfile = async(table ,attributes, id) => {
         return response.rows;
 
     } catch(error) {
-        console.error(error);
+        console.error("Error editing profile: ", error);
         throw error;
     }
 }

@@ -1,9 +1,10 @@
 const { createEvent } = require('../../SQL/EventQueries/CreateEvent');
 const { findByAttribute } = require('../../SQL/AuthQueries/FindExistingEntity');
+const { addEventCategories } = require('../../SQL/EventQueries/AddEventCategories');
 
 module.exports.EventCreation = async(req, res) => {
     try {
-        const { eventDetails, organizerID } = req.body;
+        const { eventDetails, organizerID, eventCategories } = req.body;
 
         const existingOrganizer = await findByAttribute("organizer", "id", organizerID);
 
@@ -18,6 +19,13 @@ module.exports.EventCreation = async(req, res) => {
         const successfulEventCreation = await createEvent(eventDetails, organizerID);
 
         console.log("Event creation successful", successfulEventCreation);
+
+        if(eventCategories) {
+            const eventID = successfulEventCreation.id;
+            const response = await addEventCategories(eventID, eventCategories);
+
+            console.log(response);
+        }
 
         res.status(200)
            .send({
