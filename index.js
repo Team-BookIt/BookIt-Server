@@ -6,9 +6,10 @@ require('dotenv').config();
 const app = express();
 
 // Import route handling logic
+const homeRoute = require('./Routes/HomeRoute');
 const authRoutes = require('./Routes/AuthRoutes');
 const editRoutes = require('./Routes/EditRoutes');
-const homeRoute = require('./Routes/HomeRoute');
+const eventRoutes = require('./Routes/EventRoutes');
 
 // Set up Cross-Origin resource sharing & body parser
 app.use(cors());
@@ -26,3 +27,4 @@ app.listen(3000, ()=> {
 app.use('/', homeRoute);
 app.use('/auth', authRoutes);
 app.use('/profile', editRoutes);
+app.use('/events', eventRoutes)
