@@ -20,11 +20,11 @@ app.use(
     })
 )
 
-app.listen(3000, ()=> {
-    console.log("BookIt! is up and running!");
-});
-
 app.use('/', homeRoute);
 app.use('/auth', authRoutes);
 app.use('/profile', editRoutes);
-app.use('/events', eventRoutes)
+app.use('/events', eventRoutes);
+
+app.listen(3000, ()=> {
+    console.log("BookIt! is up and running!");
+});
