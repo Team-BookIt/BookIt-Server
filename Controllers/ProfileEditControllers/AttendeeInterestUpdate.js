@@ -12,7 +12,8 @@ module.exports.AttendeeInterestUpdate = async(req, res) => {
             res.send({ message : "User not found"});
             return;
         }
-        
+
+        // Convert interests into lowercase
         let userInterests = interests.map((interest) => {
             return interest.toLowerCase();
         });

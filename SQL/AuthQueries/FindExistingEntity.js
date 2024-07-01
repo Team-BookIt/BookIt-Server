@@ -1,5 +1,6 @@
 const { pool } = require('../../Config/db');
 
+// Utility for finding all existing entities in any table
 const findByAttribute = async (tableName, attributeName, attributeValue) => {
     try {
         const query = `SELECT * FROM ${tableName} WHERE ${attributeName} = $1`;
