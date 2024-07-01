@@ -13,7 +13,6 @@ module.exports.AttendeeInterestUpdate = async(req, res) => {
             return;
         }
 
-        // Convert interests into lowercase
         let userInterests = interests.map((interest) => {
             return interest.toLowerCase();
         });
