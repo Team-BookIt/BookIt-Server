@@ -27,12 +27,11 @@ module.exports.GetEvent = async(req, res) => {
            .send({
                 message : "Event obtained successfully",
                 eventDetails : eventDetails
-           })
+           });
         
     } catch (error) {
         console.error(error);
         res.status(500)
            .send({ message : "Internal server error"});
     }
-    
 }
