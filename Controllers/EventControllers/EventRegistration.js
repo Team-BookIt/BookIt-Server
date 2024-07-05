@@ -1,5 +1,6 @@
 const { registerForEvent } = require('../../SQL/EventQueries/RegisterForEvent');
 const { findByAttribute } = require('../../SQL/AuthQueries/FindExistingEntity');
+const { getExistingBooking } = require('../../SQL/EventQueries/GetExistingBooking');
 
 module.exports.EventRegistration = async(req, res) => {
     try {
@@ -20,6 +21,14 @@ module.exports.EventRegistration = async(req, res) => {
         if(!existingEvent.length) {
             console.log("Error: No event found");
             res.send({ message : "No event found"});
+            return;
+        }
+
+        const existingBooking = await getExistingBooking(userID, eventID);
+
+        if(existingBooking.length) {
+            console.log("User has already booked this event", existingBooking);
+            res.send({ message : "Seems you've already booked this event"});
             return;
         }
 
