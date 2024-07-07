@@ -1,8 +1,8 @@
 const router = require('express').Router();
 
-const { AttendeeInterestUpdate } = require('../Controllers/ProfileEditControllers/AttendeeInterestUpdate');
-const { AttendeeProfileUpdate } = require('../Controllers/ProfileEditControllers/AttendeeProfileUpdate');
-const { OrganizerProfileUpdate } = require('../Controllers/ProfileEditControllers/OrganizerProfileUpdate');
+const { AttendeeInterestUpdate } = require('../Controllers/ProfileControllers/AttendeeInterestUpdate');
+const { AttendeeProfileUpdate } = require('../Controllers/ProfileControllers/AttendeeProfileUpdate');
+const { OrganizerProfileUpdate } = require('../Controllers/ProfileControllers/OrganizerProfileUpdate');
 
 router.put('/user/update', AttendeeProfileUpdate);
 router.put('/org/update', OrganizerProfileUpdate);
