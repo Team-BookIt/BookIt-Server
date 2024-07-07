@@ -1,4 +1,4 @@
-const { pool } = require('../../Config/db');
+const pool = require('../../Config/db');
 
 module.exports.getAllEventsBookedByUser = async(userId) => {
     try {

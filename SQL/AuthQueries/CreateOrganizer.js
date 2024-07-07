@@ -1,4 +1,4 @@
-const { pool } = require('../../Config/db');
+const pool = require('../../Config/db');
 const bcrypt = require('bcrypt');
 
 const createOrganizer = async(organizer) => {

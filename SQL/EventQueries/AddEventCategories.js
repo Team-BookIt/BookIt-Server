@@ -1,4 +1,4 @@
-const { pool } = require('../../Config/db');
+const pool = require('../../Config/db');
 const { findByAttribute } = require('../../SQL/AuthQueries/FindExistingEntity');
 
 module.exports.addEventCategories = async(eventID, eventCategories) => {
