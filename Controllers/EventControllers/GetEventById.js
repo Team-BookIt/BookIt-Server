@@ -1,7 +1,7 @@
 const { findByAttribute } = require("../../SQL/AuthQueries/FindExistingEntity");
 const { getEventById } = require("../../SQL/EventQueries/GetEventById");
 
-module.exports.GetEvent = async(req, res) => {
+module.exports.GetEventById = async(req, res) => {
     try {
         const eventID = parseInt(req.params.id);
     

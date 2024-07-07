@@ -6,8 +6,6 @@ module.exports.EventRegistration = async(req, res) => {
     try {
         const { userID, eventID } = req.body;
         
-        console.log(userID);
-
         const existingUser = await findByAttribute('guest', 'id', userID);
 
         if(!existingUser.length) {
@@ -15,6 +13,7 @@ module.exports.EventRegistration = async(req, res) => {
             res.send({ message : "No user found"});
             return;
         }
+
 
         const existingEvent = await findByAttribute('event', 'id', eventID);
 
@@ -24,6 +23,7 @@ module.exports.EventRegistration = async(req, res) => {
             return;
         }
 
+
         const existingBooking = await getExistingBooking(userID, eventID);
 
         if(existingBooking.length) {
@@ -32,6 +32,7 @@ module.exports.EventRegistration = async(req, res) => {
             return;
         }
 
+        
         const successfulEventRegistration = await registerForEvent(userID, eventID);
 
         console.log("Successful event registration: ", successfulEventRegistration);
