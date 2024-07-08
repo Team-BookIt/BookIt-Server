@@ -10,9 +10,10 @@ module.exports.getOrganizerProfile = async(organizerId) => {
                         organizer.location, 
                         organizer.logo, 
                         organizer.website
-                        FROM 
+                    FROM 
                         organizer
-                        WHERE organizer.id = $1;`;
+                    WHERE 
+                        organizer.id = $1;`;
         
         const organizerDetails = await pool.query(query, [organizerId]);
 
@@ -28,11 +29,16 @@ module.exports.getOrganizerProfile = async(organizerId) => {
                     event.event_limit,
                     organizer.name,
                     organizer.logo
-                    FROM event
-                    JOIN organizer
-                    ON event.org_id = organizer.id
-                    WHERE organizer.id = $1
-                    GROUP BY 
+                FROM 
+                    event
+                    
+                JOIN 
+                    organizer
+                ON 
+                    event.org_id = organizer.id
+                WHERE 
+                    organizer.id = $1
+                GROUP BY 
                     event.title,
                     event.bio,
                     event.venue,
