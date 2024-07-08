@@ -10,6 +10,7 @@ const homeRoute = require('./Routes/HomeRoute');
 const authRoutes = require('./Routes/AuthRoutes');
 const editRoutes = require('./Routes/EditRoutes');
 const eventRoutes = require('./Routes/EventRoutes');
+const userRoutes = require('./Routes/UserRoutes');
 
 // Set up Cross-Origin resource sharing & body parser
 app.use(cors());
@@ -24,6 +25,7 @@ app.use('/', homeRoute);
 app.use('/auth', authRoutes);
 app.use('/profile', editRoutes);
 app.use('/events', eventRoutes);
+app.use('/user', userRoutes);
 
 
 app.listen(3000, ()=> {
