@@ -11,7 +11,10 @@ const createUser = async(user) => {
 
         console.log("User created successfully", newUser.rows);
 
-        return newUser.rows[0];
+        query = `SELECT * FROM guest WHERE email = $1`
+        userDetails = await pool.query(query, [user.email]);
+
+        return userDetails.rows[0];
     } catch(error) {
         console.error(error);
         throw error;
