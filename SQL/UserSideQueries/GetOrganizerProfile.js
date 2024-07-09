@@ -54,8 +54,7 @@ module.exports.getOrganizerProfile = async(organizerId) => {
         console.log("Organizer event details: ", organizerEventDetails.rows);
 
         query = `SELECT 
-                    COUNT(event.id) AS events_organized,
-                    organizer.name
+                    COUNT(event.id) AS events_organized
                 FROM 
                     event 
                 JOIN 
@@ -72,9 +71,10 @@ module.exports.getOrganizerProfile = async(organizerId) => {
         console.log("Number of events organized: ", numberOfEventsOrganized.rows);
 
         const organizerProfile =  {
-            organizerDetails: organizerDetails.rows,
+            organizerDetails: organizerDetails.rows[0],
             organizerEventDetails: organizerEventDetails.rows,
-            numberOfEvents : numberOfEventsOrganized.rows
+            numberOfEvents : numberOfEventsOrganized.rows.length ? (numberOfEventsOrganized.rows[0].events_organized)
+                                                                      : 0
         };
 
         return organizerProfile;
