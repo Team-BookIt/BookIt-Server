@@ -53,9 +53,28 @@ module.exports.getOrganizerProfile = async(organizerId) => {
 
         console.log("Organizer event details: ", organizerEventDetails.rows);
 
+        query = `SELECT 
+                    COUNT(event.id) AS events_organized,
+                    organizer.name
+                FROM 
+                    event 
+                JOIN 
+                    organizer
+                ON  
+                    event.org_id = organizer.id
+                WHERE 
+                    organizer.id = $1
+                GROUP BY 
+                    organizer.id;`
+
+        const numberOfEventsOrganized = await pool.query(query, [organizerId]);
+
+        console.log("Number of events organized: ", numberOfEventsOrganized.rows);
+
         const organizerProfile =  {
             organizerDetails: organizerDetails.rows,
-            organizerEventDetails: organizerEventDetails.rows
+            organizerEventDetails: organizerEventDetails.rows,
+            numberOfEvents : numberOfEventsOrganized.rows
         };
 
         return organizerProfile;
