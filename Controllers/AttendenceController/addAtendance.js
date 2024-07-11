@@ -17,17 +17,17 @@ module.exports.AddAttendance = async (req, res) =>{
 
         if(!existingEvent.length) {
             console.log("Error: No existing event found");
-            res.send({ message : "No user found"});
+            res.send({ message : "No event found"});
             return;
         }
         const successfullyAddedAttendance = await addAttendance(userID, eventID);
 
-        console.log("Successful event registration: ", successfullyAddedAttendance);
+        console.log("Successfully added attendee ", successfullyAddedAttendance);
 
         res.status(200)
            .send({ 
-                message : 'Event registration successful',
-                registrationRecord : successfulEventRegistration
+                message : 'attendee added successfully',
+                attendanceRecord : successfullyAddedAttendance
             });
 
     } catch (error) {
