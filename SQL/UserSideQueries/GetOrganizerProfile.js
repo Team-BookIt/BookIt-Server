@@ -73,8 +73,7 @@ module.exports.getOrganizerProfile = async(organizerId) => {
         const organizerProfile =  {
             organizerDetails: organizerDetails.rows[0],
             organizerEventDetails: organizerEventDetails.rows,
-            numberOfEvents : numberOfEventsOrganized.rows.length ? (numberOfEventsOrganized.rows[0].events_organized)
-                                                                      : 0
+            numberOfEvents : numberOfEventsOrganized.rows.length ? (numberOfEventsOrganized.rows[0].events_organized) : 0
         };
 
         return organizerProfile;
