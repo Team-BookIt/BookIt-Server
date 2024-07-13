@@ -37,10 +37,30 @@ module.exports.getEventById = async(eventID) => {
         eventCategoryInfo.rows.map(category => {
             eventCategories.push(category.tags);
         });
-    
+        
+        query = `SELECT 
+                    guest.first_name, guest.last_name, guest.email,
+                    review.content, review.rating
+                FROM 
+                    review
+                JOIN    
+                    guest
+                ON 
+                    review.guest_id = guest.id
+                WHERE 
+                    review.event_id = $1
+                GROUP BY 
+                    guest.first_name, guest.last_name, guest.email,
+                    review.content, review.rating;`;
+
+        const eventReviews = await pool.query(query, [eventID]);
+
+        console.log("Event reviews: ", eventReviews.rows);
+
         const event = {
             eventData : eventData.rows[0],
-            eventCategories : eventCategories
+            eventCategories : eventCategories,
+            eventReviews : eventReviews.rows
         };
     
         return event;
