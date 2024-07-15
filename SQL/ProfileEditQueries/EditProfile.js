@@ -1,4 +1,4 @@
-const { pool } = require('../../Config/db');
+const pool = require('../../Config/db');
 
 module.exports.editProfile = async(table ,attributes, id) => {
     // Logic: 
@@ -7,7 +7,7 @@ module.exports.editProfile = async(table ,attributes, id) => {
     // Steps:
     // 1 - Create a mapping of object keys and respective indexes. 
     // Key stands for the name of the attribute we are updating
-    //  Index will be the parameter for updating the table
+    //  Index will be the placeholder parameter for updating the table
     // 2 - Pass the object values in the values array , alongside the user id
     // 3 - For the user id, we pass at at the end of the values array. Hence, to reference it, 
     //     we go the entire length of the attribute values array and add 1 (since the parameter strings)
@@ -34,7 +34,7 @@ module.exports.editProfile = async(table ,attributes, id) => {
         return response.rows;
 
     } catch(error) {
-        console.error(error);
+        console.error("Error editing entity: ", error);
         throw error;
     }
 }
