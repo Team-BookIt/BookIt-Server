@@ -24,7 +24,8 @@ module.exports.AttendeeLogin = async(req, res) => {
                     .send({
                         message : "User login successful",
                         token : token,
-                        user : user
+                        user : user,
+                        role : "Attendee"
                     })
             } else {
                 res.status(401)

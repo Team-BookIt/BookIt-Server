@@ -70,10 +70,35 @@ module.exports.getOrganizerProfile = async(organizerId) => {
 
         console.log("Number of events organized: ", numberOfEventsOrganized.rows);
 
+        query = `SELECT 
+                AVG(
+                        review.rating
+                    ) AS average_rating,
+                    organizer.name
+                FROM 
+                    review
+                JOIN
+                    event
+                ON 
+                    event.id = review.event_id
+                JOIN  
+                    organizer
+                ON 
+                    organizer.id = event.org_id
+                WHERE 
+                    organizer.id = $1
+                GROUP BY 
+                    organizer.name;`;
+
+        const averageRating = await pool.query(query, [organizerId]);
+
+        console.log("Average rating: ", averageRating.rows);
+
         const organizerProfile =  {
             organizerDetails: organizerDetails.rows[0],
             organizerEventDetails: organizerEventDetails.rows,
-            numberOfEvents : numberOfEventsOrganized.rows.length ? (numberOfEventsOrganized.rows[0].events_organized) : 0
+            numberOfEvents : numberOfEventsOrganized.rows.length ? (numberOfEventsOrganized.rows[0].events_organized) : 0,
+            averageRating : averageRating.rows.length ? (averageRating.rows[0].average_rating) : 0
         };
 
         return organizerProfile;

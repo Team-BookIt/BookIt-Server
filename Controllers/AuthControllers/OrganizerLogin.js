@@ -24,7 +24,8 @@ module.exports.OrganizerLogin = async(req, res) => {
                     .send({
                         message : "Organizer login successful",
                         token : token,
-                        organizer : organizer
+                        organizer : organizer,
+                        role : "Organizer"
                     })
             } else {
                 res.status(401)
