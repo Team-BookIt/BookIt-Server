@@ -41,7 +41,8 @@ module.exports.OrganizerSignUp = async(req, res) => {
             res.json({
                 message : 'Organizer registered successfully',
                 token : token,
-                organizer : newOrganizer
+                organizer : newOrganizer,
+                role : "Organizer"
             })
         }
 

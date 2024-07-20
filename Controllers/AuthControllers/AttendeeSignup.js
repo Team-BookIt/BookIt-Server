@@ -30,7 +30,8 @@ module.exports.AttendeeSignUp = async(req, res) => {
             res.json({
                 message : 'User created successfully',
                 token : token,
-                user : user
+                user : user,
+                role : "Attendee"
             })
 
         }
