@@ -5,6 +5,7 @@ const { EventDetailsEdit } = require('../Controllers/EventControllers/EventDetai
 const { EventRegistration } = require('../Controllers/EventControllers/EventRegistration');
 const { GetAllEvents } = require('../Controllers/EventControllers/GetAllEventDetails');
 const { GetAllEventsBookedByUser } = require('../Controllers/EventControllers/GetAllEventsBookedByUser');
+const { GetEventBookingList } = require('../Controllers/EventControllers/GetEventBookingList');
 const { GetEventById } = require('../Controllers/EventControllers/GetEventById');
 
 router.post('/create', EventCreation);
@@ -13,5 +14,6 @@ router.put('/update', EventDetailsEdit);
 router.get('/:id', GetEventById);
 router.get('/', GetAllEvents);
 router.get('/bookings/:userId', GetAllEventsBookedByUser);
+router.get('/:eventId/bookings', GetEventBookingList);
 
 module.exports = router;
