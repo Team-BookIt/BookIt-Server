@@ -20,6 +20,7 @@ module.exports.getOrganizerProfile = async(organizerId) => {
         console.log("Organizer Details: ", organizerDetails.rows);
 
         query = `SELECT
+                    event.id
                     event.title,
                     event.bio,
                     event.venue,
@@ -39,6 +40,7 @@ module.exports.getOrganizerProfile = async(organizerId) => {
                 WHERE 
                     organizer.id = $1
                 GROUP BY 
+                    event.id,
                     event.title,
                     event.bio,
                     event.venue,
