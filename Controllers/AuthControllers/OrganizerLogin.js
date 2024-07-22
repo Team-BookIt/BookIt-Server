@@ -1,12 +1,13 @@
 const { findByAttribute } = require('../../SQL/AuthQueries/FindExistingEntity');
 const { verifyPassword } = require('../../Util/VerifyPassword');
 const { generateToken } = require('../../Util/Auth');
+const { getOrganizerProfile } = require('../../SQL/UserSideQueries/GetOrganizerProfile');
 
 module.exports.OrganizerLogin = async(req, res) => {
     try {
         const { email, password } = req.body;
 
-        const organizer = await findByAttribute("organizer", "email", email);
+        let organizer = await findByAttribute("organizer", "email", email);
 
         if(organizer.length == 0) {
             console.log("No existing email found");
@@ -16,7 +17,10 @@ module.exports.OrganizerLogin = async(req, res) => {
 
             if(isValidPassword) {
                 console.log(isValidPassword);
+                
                 const token = generateToken(organizer.id);
+
+                organizer = await getOrganizerProfile(organizer.id);
 
                 console.log("Organizer login successful: ", organizer);
 
