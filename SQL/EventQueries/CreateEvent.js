@@ -22,7 +22,7 @@ module.exports.createEvent = async(eventDetails, organizerID) => {
         
         const values = [organizerID, ...Object.values(eventDetails.coreEventDetails), ...Object.values(eventDetails.additionalEventDetails)];
 
-        const query = `INSERT INTO event (org_id, ${coreDetails} ${extraDetails})
+        const query = `INSERT INTO event (org_id, ${coreDetails}, ${extraDetails})
                        VALUES ($1, $${placeholders})
                        RETURNING *;`;
 
