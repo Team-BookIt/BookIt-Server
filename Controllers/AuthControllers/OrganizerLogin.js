@@ -17,10 +17,10 @@ module.exports.OrganizerLogin = async(req, res) => {
 
             if(isValidPassword) {
                 console.log(isValidPassword);
-                
+
                 const token = generateToken(organizer.id);
 
-                organizer = await getOrganizerProfile(organizer.id);
+                console.log(organizer)
 
                 console.log("Organizer login successful: ", organizer);
 
