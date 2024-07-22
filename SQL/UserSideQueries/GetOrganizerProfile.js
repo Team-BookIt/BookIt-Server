@@ -3,7 +3,7 @@ const pool = require('../../Config/db');
 module.exports.getOrganizerProfile = async(organizerId) => {
     try {
         let query = `SELECT
-                        organizer.id AS org_id 
+                        organizer.id AS org_id, 
                         organizer.name, 
                         organizer.bio,
                         organizer.contact, 
