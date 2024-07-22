@@ -20,7 +20,7 @@ module.exports.getOrganizerProfile = async(organizerId) => {
         console.log("Organizer Details: ", organizerDetails.rows);
 
         query = `SELECT
-                    event.id
+                    event.id,
                     event.title,
                     event.bio,
                     event.venue,
@@ -51,6 +51,7 @@ module.exports.getOrganizerProfile = async(organizerId) => {
                     organizer.name,
                     organizer.logo;`;
         
+        console.log(query);
         const organizerEventDetails = await pool.query(query, [organizerId]);
 
         console.log("Organizer event details: ", organizerEventDetails.rows);
