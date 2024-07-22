@@ -1,7 +1,6 @@
 const { findByAttribute } = require('../../SQL/AuthQueries/FindExistingEntity');
 const { verifyPassword } = require('../../Util/VerifyPassword');
 const { generateToken } = require('../../Util/Auth');
-const { getOrganizerProfile } = require('../../SQL/UserSideQueries/GetOrganizerProfile');
 
 module.exports.OrganizerLogin = async(req, res) => {
     try {
@@ -20,7 +19,7 @@ module.exports.OrganizerLogin = async(req, res) => {
 
                 const token = generateToken(organizer.id);
 
-                console.log(organizer)
+                console.log(organizer[0])
 
                 console.log("Organizer login successful: ", organizer);
 
@@ -28,7 +27,7 @@ module.exports.OrganizerLogin = async(req, res) => {
                     .send({
                         message : "Organizer login successful",
                         token : token,
-                        organizer : organizer,
+                        organizer : organizer[0],
                         role : "Organizer"
                     })
             } else {
