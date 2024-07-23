@@ -1,6 +1,7 @@
 const router = require('express').Router();
 
 const { GetEventAttendanceList } = require('../Controllers/AttendenceController/GetEventAttendanceList');
+const { CancelBooking } = require('../Controllers/EventControllers/CancelBooking');
 const { EventCreation } = require('../Controllers/EventControllers/EventCreation');
 const { EventDetailsEdit } = require('../Controllers/EventControllers/EventDetailEditing');
 const { EventRegistration } = require('../Controllers/EventControllers/EventRegistration');
@@ -17,5 +18,6 @@ router.get('/', GetAllEvents);
 router.get('/bookings/:userId', GetAllEventsBookedByUser);
 router.get('/:eventId/bookings', GetEventBookingList);
 router.get('/:eventId/attendance', GetEventAttendanceList);
+router.delete('/bookings/delete', CancelBooking);
 
 module.exports = router;
