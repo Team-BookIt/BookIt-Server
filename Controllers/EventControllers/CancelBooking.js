@@ -3,9 +3,9 @@ const { cancelBooking } = require("../../SQL/EventQueries/CancelBooking");
 
 module.exports.CancelBooking = async(req, res) => {
     try {
-        const { guestId, eventId } = req.body.bookingDetails;
+        const { guestID, eventID } = req.body.bookingDetails;
 
-        const existingGuest = await findByAttribute('guest', 'id', guestId);
+        const existingGuest = await findByAttribute('guest', 'id', guestID);
 
         if(!existingGuest.length) {
             console.log("Guest not found");
@@ -13,7 +13,7 @@ module.exports.CancelBooking = async(req, res) => {
             return;
         }
 
-        const existingEvent = await findByAttribute('event', 'id', eventId);
+        const existingEvent = await findByAttribute('event', 'id', eventID);
 
         if(!existingEvent.length) {
             console.log("Event not found");
@@ -21,7 +21,7 @@ module.exports.CancelBooking = async(req, res) => {
             return;
         }
 
-        const successfulBookingDeletion = await cancelBooking(guestId, eventId);
+        const successfulBookingDeletion = await cancelBooking(guestID, eventID);
 
         const response = successfulBookingDeletion ? {
             message : "Event booking cancelled successfully",
