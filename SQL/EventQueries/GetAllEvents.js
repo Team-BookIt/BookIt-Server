@@ -6,7 +6,7 @@ module.exports.getAllEvents = async() => {
                         event.id AS event_id, event.title, event.image,
                         event.event_timestamp, event.price,
                         event.bio, event.venue, event.event_limit,
-                        organizer_id AS org_id,
+                        organizer.id AS org_id,
                         organizer.name AS organizer_name,
                         organizer.logo AS organizer_logo,
                         ARRAY_AGG(categories.tags) AS event_tags
