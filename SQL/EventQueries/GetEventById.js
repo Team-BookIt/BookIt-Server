@@ -3,9 +3,13 @@ const pool = require('../../Config/db');
 module.exports.getEventById = async(eventID) => {
     try {
         let query = `SELECT 
-                        event.title, event.image, 
-                        event.bio, event.venue, event.price, 
-                        event.event_timestamp, event.event_limit, 
+                        event.title,
+                        event.image, 
+                        event.bio, 
+                        event.venue, 
+                        event.price, 
+                        event.event_timestamp, 
+                        event.event_limit, 
                         organizer.id AS org_id,
                         organizer.name AS organizer_name, 
                         organizer.logo AS organizer_logo
@@ -40,8 +44,11 @@ module.exports.getEventById = async(eventID) => {
         });
         
         query = `SELECT 
-                    guest.first_name, guest.last_name, guest.email,
-                    review.content, review.rating
+                    guest.first_name,
+                    guest.last_name,
+                    guest.email,
+                    review.content,
+                    review.rating
                 FROM 
                     review
                 JOIN    
@@ -51,8 +58,11 @@ module.exports.getEventById = async(eventID) => {
                 WHERE 
                     review.event_id = $1
                 GROUP BY 
-                    guest.first_name, guest.last_name, guest.email,
-                    review.content, review.rating;`;
+                    guest.first_name,
+                    guest.last_name,
+                    guest.email,
+                    review.content,
+                    review.rating;`;
 
         const eventReviews = await pool.query(query, [eventID]);
 

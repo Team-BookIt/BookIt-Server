@@ -3,7 +3,10 @@ const pool = require("../../Config/db");
 module.exports.getEventAttendanceList = async(eventId) => {
     try {
         const query = `SELECT 
-                        guest.first_name, guest.last_name, guest.email, attendance.created_at AS timestamp
+                        guest.first_name, 
+                        guest.last_name, 
+                        guest.email, 
+                        attendance.created_at AS timestamp
                     FROM 
                         guest
                     JOIN
@@ -17,7 +20,10 @@ module.exports.getEventAttendanceList = async(eventId) => {
                     WHERE
                         event.id = $1
                     GROUP BY 
-                        guest.first_name, guest.last_name, guest.email, timestamp;`;
+                        guest.first_name, 
+                        guest.last_name, 
+                        guest.email, 
+                        timestamp;`;
 
         const attendanceList = await pool.query(query, [eventId]);
 
