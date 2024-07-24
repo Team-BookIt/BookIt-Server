@@ -6,6 +6,7 @@ module.exports.getEventById = async(eventID) => {
                         event.title, event.image, 
                         event.bio, event.venue, event.price, 
                         event.event_timestamp, event.event_limit, 
+                        organizer.id AS org_id,
                         organizer.name AS organizer_name, 
                         organizer.logo AS organizer_logo
                     FROM 
