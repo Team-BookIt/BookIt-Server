@@ -10,7 +10,10 @@ module.exports.AttendeeLogin = async(req, res) => {
 
         if(user.length == 0) {
             res.status(204)
-                .send({ message : "No exisiting email found"});
+                .send({ 
+                    message : "No exisiting email found",
+                    success : false
+                });
         } else {
             const isValidPassword = await verifyPassword(password, user[0].password);
 
@@ -25,7 +28,8 @@ module.exports.AttendeeLogin = async(req, res) => {
                         message : "User login successful",
                         token : token,
                         user : user[0],
-                        role : "Attendee"
+                        role : "Attendee",
+                        success : true
                     })
             } else {
                 res.status(401)

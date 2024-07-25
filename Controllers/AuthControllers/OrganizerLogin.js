@@ -10,7 +10,10 @@ module.exports.OrganizerLogin = async(req, res) => {
 
         if(organizer.length == 0) {
             console.log("No existing email found");
-            res.send({ message : "No exisiting email found"})
+            res.send({ 
+                message : "No exisiting email found",
+                success : false
+            })
         } else {
             const isValidPassword = await verifyPassword(password, organizer[0].password);
 
@@ -28,17 +31,24 @@ module.exports.OrganizerLogin = async(req, res) => {
                         message : "Organizer login successful",
                         token : token,
                         organizer : organizer[0],
-                        role : "Organizer"
+                        role : "Organizer",
+                        success : true
                     })
             } else {
                 res.status(401)
-                    .send({ message : "Incorrect password"});
+                    .send({ 
+                        message : "Incorrect password",
+                        success : false
+                    });
             }
         }
     } catch(error) {
         console.error(error);
         res.status(500)
-            .send({ message : "Internal server error" });
+            .send({ 
+                message : "Internal server error",
+                success : false
+            });
         throw error;
     }
 }

@@ -11,7 +11,8 @@ module.exports.AttendeeSignUp = async(req, res) => {
         
         if(existingUser.length > 0) {
             res.json({
-                message : "A user with this email already exists"
+                message : "A user with this email already exists",
+                success : false
             })
         } else {
 
@@ -31,14 +32,16 @@ module.exports.AttendeeSignUp = async(req, res) => {
                 message : 'User created successfully',
                 token : token,
                 user : user,
-                role : "Attendee"
+                role : "Attendee",
+                success : false
             })
 
         }
     } catch(error) {
         console.log(error);
         res.send({
-            message : "Internal Server error"
+            message : "Internal Server error",
+            success : false
         })
     }
 }
