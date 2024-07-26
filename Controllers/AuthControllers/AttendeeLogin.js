@@ -33,7 +33,10 @@ module.exports.AttendeeLogin = async(req, res) => {
                     })
             } else {
                 res.status(401)
-                    .send({ message : "Incorrect password"});
+                    .send({ 
+                        message : "Incorrect password",
+                        success : false
+                    });
             }
         }
     } catch(error) {
