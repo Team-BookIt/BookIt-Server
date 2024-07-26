@@ -8,7 +8,7 @@ module.exports.OrganizerLogin = async(req, res) => {
 
         let organizer = await findByAttribute("organizer", "email", email);
 
-        if(organizer.length == 0) {
+        if(!organizer.length) {
             console.log("No existing email found");
             res.send({ 
                 message : "No exisiting email found",
