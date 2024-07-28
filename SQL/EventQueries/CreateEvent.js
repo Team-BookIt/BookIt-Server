@@ -24,7 +24,9 @@ module.exports.createEvent = async(eventDetails, organizerID) => {
 
         const query = `INSERT INTO event (org_id, ${coreDetails}, ${extraDetails})
                        VALUES ($1, $${placeholders})
-                       RETURNING *`;
+                       RETURNING *;`;
+
+        console.log(query);
 
         const response = await pool.query(query, values);
 

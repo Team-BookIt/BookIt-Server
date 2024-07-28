@@ -8,7 +8,7 @@ const findByAttribute = async (tableName, attributeName, attributeValue) => {
         const result = await pool.query(query, values);
         return result.rows;
     } catch (error) {
-        console.error(error);
+        console.error("Attribute error: " ,error);
         throw error;
     }
 }

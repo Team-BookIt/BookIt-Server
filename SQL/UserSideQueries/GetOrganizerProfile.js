@@ -2,7 +2,8 @@ const pool = require('../../Config/db');
 
 module.exports.getOrganizerProfile = async(organizerId) => {
     try {
-        let query = `SELECT 
+        let query = `SELECT
+                        organizer.id AS org_id, 
                         organizer.name, 
                         organizer.bio,
                         organizer.contact, 
@@ -20,6 +21,7 @@ module.exports.getOrganizerProfile = async(organizerId) => {
         console.log("Organizer Details: ", organizerDetails.rows);
 
         query = `SELECT
+                    event.id AS event_id,
                     event.title,
                     event.bio,
                     event.venue,
@@ -39,6 +41,7 @@ module.exports.getOrganizerProfile = async(organizerId) => {
                 WHERE 
                     organizer.id = $1
                 GROUP BY 
+                    event.id,
                     event.title,
                     event.bio,
                     event.venue,
@@ -49,6 +52,7 @@ module.exports.getOrganizerProfile = async(organizerId) => {
                     organizer.name,
                     organizer.logo;`;
         
+        console.log(query);
         const organizerEventDetails = await pool.query(query, [organizerId]);
 
         console.log("Organizer event details: ", organizerEventDetails.rows);
@@ -95,7 +99,7 @@ module.exports.getOrganizerProfile = async(organizerId) => {
         console.log("Average rating: ", averageRating.rows);
 
         const organizerProfile =  {
-            organizerDetails: organizerDetails.rows[0],
+            organizerDetails: organizerDetails.rows,
             organizerEventDetails: organizerEventDetails.rows,
             numberOfEvents : numberOfEventsOrganized.rows.length ? (numberOfEventsOrganized.rows[0].events_organized) : 0,
             averageRating : averageRating.rows.length ? (averageRating.rows[0].average_rating) : 0

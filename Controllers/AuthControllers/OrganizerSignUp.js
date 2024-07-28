@@ -21,7 +21,8 @@ module.exports.OrganizerSignUp = async(req, res) => {
 
         if(existingOrganizer.length > 0) {
             res.json({
-                message : "An organizer with this name already exists"
+                message : "An organizer with this name already exists",
+                success : false
             })
             return
         }
@@ -42,7 +43,8 @@ module.exports.OrganizerSignUp = async(req, res) => {
                 message : 'Organizer registered successfully',
                 token : token,
                 organizer : newOrganizer,
-                role : "Organizer"
+                role : "Organizer",
+                success : true
             })
         }
 
@@ -51,7 +53,8 @@ module.exports.OrganizerSignUp = async(req, res) => {
         console.error(error);
         res.status(500)
             .send({
-                message : 'Internal Server Error'
+                message : 'Internal Server Error',
+                success : false
             })
         throw error;
     }

@@ -3,9 +3,15 @@ const pool = require('../../Config/db');
 module.exports.getAllEvents = async() => {
     try {
         const query = `SELECT 
-                        event.id AS event_id, event.title, event.image,
-                        event.event_timestamp, event.price,
-                        event.bio, event.venue, event.event_limit,
+                        event.id AS event_id, 
+                        event.title, 
+                        event.image,
+                        event.event_timestamp, 
+                        event.price,
+                        event.bio, 
+                        event.venue, 
+                        event.event_limit,
+                        organizer.id AS org_id,
                         organizer.name AS organizer_name,
                         organizer.logo AS organizer_logo,
                         ARRAY_AGG(categories.tags) AS event_tags
@@ -23,8 +29,9 @@ module.exports.getAllEvents = async() => {
                         event.id, event.title, event.image,
                         event.event_timestamp, event.price,
                         event.bio, event.venue, event.event_limit,
+                        organizer.id,
                         organizer.name,
-                        organizer.logo`;
+                        organizer.logo;`;
     
         const allEventsData = await pool.query(query);
     
