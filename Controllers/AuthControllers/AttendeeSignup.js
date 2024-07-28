@@ -35,7 +35,7 @@ module.exports.AttendeeSignUp = async(req, res) => {
             text : genericEmail
         }
 
-        await sendEmail(sampleEmail);
+        sendEmail(sampleEmail);
         
         res.json({
             message : 'User created successfully',
