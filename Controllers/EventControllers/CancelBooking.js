@@ -1,15 +1,21 @@
 const { findByAttribute } = require("../../SQL/AuthQueries/FindExistingEntity");
 const { cancelBooking } = require("../../SQL/EventQueries/CancelBooking");
+const { getExistingBooking } = require("../../SQL/EventQueries/GetExistingBooking");
+
 
 module.exports.CancelBooking = async(req, res) => {
     try {
-        const { guestID, eventID } = req.body.bookingDetails;
+
+        console.log("Request Body: ", req.params);
+
+        const guestID  = req.params.guestID;
+        const eventID  = req.params.eventID;
 
         const existingGuest = await findByAttribute('guest', 'id', guestID);
 
         if(!existingGuest.length) {
-            console.log("Guest not found");
-            res.send({ message : "Guest not found" });
+            console.log("Guest not found. ID :", guestID);
+            res.send({ message : "Guest not found. ID :", guestID });
             return;
         }
 
@@ -19,6 +25,13 @@ module.exports.CancelBooking = async(req, res) => {
             console.log("Event not found");
             res.send({ message : "Event not found" });
             return;
+        }
+
+        const existingBooking = await getExistingBooking(guestID, eventID);
+
+        if(!existingBooking.length) {
+            console.log("User has not booked this event");
+            res.send({ message : "Booking not found" });
         }
 
         const successfulBookingDeletion = await cancelBooking(guestID, eventID);

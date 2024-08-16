@@ -1,14 +1,19 @@
-// const cloudinary = require('cloudinary').v2;
 const { createEvent } = require('../../SQL/EventQueries/CreateEvent');
 const { findByAttribute } = require('../../SQL/AuthQueries/FindExistingEntity');
 const { addEventCategories } = require('../../SQL/EventQueries/AddEventCategories');
+
 const uploadImageToCloudinary = require('../../Util/UploadImage');
+const sendEmail = require('../../Util/Emails/sendEmail');
+const { SuccessfulEventCreationEmail } = require('../../Util/Emails/Message_Templates/SuccessfulEventCreation');
 
 module.exports.EventCreation = async (req, res) => {
     try {
-        const { eventDetails, organizerID, eventCategories } = req.body;
+        let { eventDetails, organizerID, eventCategories } = req.body;
 
+        console.log("Request:", req.body);
+        console.log("Organizer ID:", organizerID);
         const existingOrganizer = await findByAttribute("organizer", "id", organizerID);
+        console.log(existingOrganizer);
 
         if (!existingOrganizer.length) {
             console.log("Organizer not found", organizerID);
@@ -17,24 +22,30 @@ module.exports.EventCreation = async (req, res) => {
         }
 
         // Handle image uploading
-        const image = req.file;
-        if (!image) {
-            res.status(400).send({ message: 'Image file is required' });
-            return;
-        }
+        // const image = req.file;
+        // if (!image) {
+        //     res.status(400).send({ message: 'Image file is required' });
+        //     return;
+        // }
 
-        const uploadedImageData = await uploadImageToCloudinary(image);
+        // const uploadedImageData = await uploadImageToCloudinary(image);
+
+        // // Include uploaded image url in eventDetails object
+        // if(!(typeof eventDetails === 'object')) {
+        //     eventDetails = JSON.parse(eventDetails);
+        // }
         
-        let eventData = JSON.parse(eventDetails);
-        eventData.additionalEventDetails.image = uploadedImageData.url;
+        // eventDetails.additionalEventDetails.image = uploadedImageData.url;
 
-        console.log("Event data: ", eventData);
+        console.log("Event data: ", eventDetails);
 
-        const successfulEventCreation = await createEvent(eventData, organizerID);
+        const successfulEventCreation = await createEvent(eventDetails, organizerID);
 
         console.log("Event creation successful", successfulEventCreation);
 
 
+        // Parse eventCategories into a string(for testing via Postman)
+        // First check whether it's an actual array. If not, parse
         if (eventCategories) {
             let parsedEventCategories = eventCategories;
 
@@ -48,6 +59,17 @@ module.exports.EventCreation = async (req, res) => {
             console.log(response);
         }
 
+        // Send confirmation email
+        let emailDetails = {
+            sender : "mr.laodicean@gmail.com",
+            receipient : {
+                name : existingOrganizer[0].name,
+                email : "vincechurchillankrah@gmail.com"
+            }
+        };
+
+        sendEmail(SuccessfulEventCreationEmail(emailDetails,eventDetails));
+
         res.status(200).send({
             message: "Event created successfully",
             event: successfulEventCreation
@@ -55,7 +77,9 @@ module.exports.EventCreation = async (req, res) => {
 
     } catch (error) {
         console.error(error);
-        res.status(500).send({ message: 'Internal server error' });
+        res.status(500).send({ 
+            message: 'Internal server error',
+            error : error });
         throw error;
     }
 }

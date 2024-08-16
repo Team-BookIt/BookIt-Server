@@ -1,6 +1,8 @@
 const { findByAttribute } = require('../../SQL/AuthQueries/FindExistingEntity');
 const { createOrganizer } = require('../../SQL/AuthQueries/CreateOrganizer');
 const { generateToken }  = require('../../Util/Auth');
+const sendEmail = require('../../Util/Emails/sendEmail');
+const { SuccessfulSignUpEmail } = require('../../Util/Emails/Message_Templates/SuccessfulSignUp');
 
 module.exports.OrganizerSignUp = async(req, res) => {
     try {
@@ -27,17 +29,26 @@ module.exports.OrganizerSignUp = async(req, res) => {
             return
         }
 
-        if(existingOrganizer.length == 0) {
-
             let newOrganizer = {
                 name : name,
                 email : email,
                 password : password
             };
 
-            newOrganizer = await createOrganizer(newOrganizer);
+        newOrganizer = await createOrganizer(newOrganizer);
 
-            const token = generateToken(newOrganizer.id);
+        const token = generateToken(newOrganizer.id);
+
+        // Send confirmation email on sign up
+        const emailDetails = {
+            sender : 'hello@bookit.com',
+            receipient : {
+                email : email,
+                first_name : name
+            }
+        }
+
+        sendEmail(SuccessfulSignUpEmail(emailDetails));
 
             res.json({
                 message : 'Organizer registered successfully',
@@ -46,8 +57,6 @@ module.exports.OrganizerSignUp = async(req, res) => {
                 role : "Organizer",
                 success : true
             })
-        }
-
 
     } catch(error) {
         console.error(error);

@@ -11,15 +11,15 @@ module.exports.AddEventReview = async(req, res) => {
         if(!existingUser) {
             console.log(existingUser);
             console.log("You did not attend this event", guestID);
-            res.send({ message : "Attendee not found"});
+            res.send({ message : "Attendee/Event not found"});
             return;
         }
         
         const existingReview = await findExistingEventReview(guestID, eventID);
-        if(!existingReview) {
+        if(existingReview.length) {
             console.log(existingReview);
             console.log("You have already reviewed this event", guestID);
-            res.send({ message : "You can only review an event once"});
+            res.send({ message : "You can only review an event once" });
             return;
         }
 

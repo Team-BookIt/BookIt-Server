@@ -3,12 +3,13 @@ const { editProfile } = require('../../SQL/ProfileEditQueries/EditProfile');
 
 module.exports.AttendeeProfileUpdate = async(req, res) => {
     try {
-        const { attributes, id } = req.body;
+        const { attributes } = req.body;
+        const id = req.params.userID;
         const existingUser = await findByAttribute("guest", "id", id);
 
         if(!existingUser.length) {
             console.log(id, existingUser);
-            res.send({ message : "No user found"});
+            res.send({ message : "No user found. ID : ", id});
             return;
         }
 
